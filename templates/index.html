@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>HateGuard — Speech Classifier</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+  <!-- ── Background grid decoration ── -->
+  <div class="bg-grid"></div>
+  <div class="bg-glow"></div>
+
+  <!-- ── Main wrapper ── -->
+  <div class="container">
+
+    <!-- HEADER -->
+    <header class="header">
+      <div class="logo">
+        <span class="logo-icon">⬡</span>
+        <span class="logo-text">HateGuard</span>
+      </div>
+      <p class="tagline">Automated Hate Speech &amp; Offensive Language Detection</p>
+      <div class="badge-row">
+        <span class="badge">Davidson et al. Dataset</span>
+        <span class="badge">24,783 Tweets</span>
+        <span class="badge">3 ML Models</span>
+      </div>
+    </header>
+
+    <!-- INPUT SECTION -->
+    <section class="input-section">
+      <label class="input-label" for="textInput">Enter text to analyze</label>
+
+      <div class="textarea-wrapper">
+        <textarea
+          id="textInput"
+          placeholder="Paste a tweet, comment, or any text here…"
+          rows="4"
+          maxlength="500"
+        ></textarea>
+        <div class="char-count"><span id="charCount">0</span> / 500</div>
+      </div>
+
+      <div class="button-row">
+        <button id="analyzeBtn" class="btn-primary">
+          <span class="btn-text">Analyze Text</span>
+          <span class="btn-icon">→</span>
+        </button>
+        <button id="clearBtn" class="btn-secondary">Clear</button>
+      </div>
+
+      <!-- Example chips -->
+      <div class="examples-row">
+        <span class="examples-label">Try an example:</span>
+        <button class="chip" data-text="I really love this sunny weather today, feeling great!">Neutral</button>
+        <button class="chip" data-text="This damn code won't compile, what the hell is wrong with it">Mild Profanity</button>
+        <button class="chip" data-text="I hate all people from that country, they should leave">Targeted Hate</button>
+      </div>
+    </section>
+
+    <!-- RESULTS SECTION (hidden until prediction runs) -->
+    <section class="results-section" id="resultsSection">
+
+      <!-- Loading state -->
+      <div class="loading" id="loadingState">
+        <div class="spinner"></div>
+        <span>Analyzing with 3 models…</span>
+      </div>
+
+      <!-- Error state -->
+      <div class="error-box" id="errorState"></div>
+
+      <!-- Results content -->
+      <div class="results-content" id="resultsContent">
+
+        <!-- Cleaned text preview -->
+        <div class="cleaned-text-box">
+          <span class="cleaned-label">Preprocessed text</span>
+          <p id="cleanedText" class="mono-text"></p>
+        </div>
+
+        <!-- Model result cards -->
+        <div class="cards-grid" id="cardsGrid">
+          <!-- Cards injected by JS -->
+        </div>
+
+        <!-- Verdict banner -->
+        <div class="verdict-banner" id="verdictBanner">
+          <span class="verdict-label">Overall Verdict</span>
+          <span class="verdict-text" id="verdictText"></span>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- HOW IT WORKS section -->
+    <section class="how-it-works">
+      <h2 class="section-title">How it works</h2>
+      <div class="steps-grid">
+        <div class="step">
+          <div class="step-num">01</div>
+          <div class="step-title">Preprocess</div>
+          <div class="step-desc">Text is lowercased, URLs/handles stripped, stop words removed, and words lemmatized.</div>
+        </div>
+        <div class="step">
+          <div class="step-num">02</div>
+          <div class="step-title">Vectorize</div>
+          <div class="step-desc">TF-IDF with bigrams converts the cleaned text into a numeric feature vector.</div>
+        </div>
+        <div class="step">
+          <div class="step-num">03</div>
+          <div class="step-title">Classify</div>
+          <div class="step-desc">Three models — Logistic Regression, SVM, and Random Forest — each cast a vote.</div>
+        </div>
+        <div class="step">
+          <div class="step-num">04</div>
+          <div class="step-title">Result</div>
+          <div class="step-desc">Each model returns a class and confidence score. The majority vote is the final verdict.</div>
+        </div>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <p>Built for the ML Project — Aeman Nadeem &amp; Amna Arshad</p>
+    </footer>
+
+  </div><!-- end .container -->
+
+  <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
