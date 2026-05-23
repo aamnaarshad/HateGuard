@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>HateGuard — Speech Classifier</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+  <div class="container">
+
+    <!-- HEADER -->
+    <header class="header">
+      <div class="logo">
+        <span class="logo-icon">⬡</span>
+        <span class="logo-text">HateGuard</span>
+      </div>
+      <p class="tagline">Automated Hate Speech &amp; Offensive Language Detection</p>
+      <div class="badge-row">
+        <span class="badge">Davidson et al. Dataset</span>
+        <span class="badge">24,783 Tweets</span>
+        <span class="badge">3 ML Models</span>
+      </div>
+    </header>
+
+    <!-- INPUT SECTION -->
+    <section class="input-section">
+      <label class="input-label" for="textInput">Enter text to analyze</label>
+
+      <div class="textarea-wrapper">
+        <textarea
+          id="textInput"
+          placeholder="Type or paste a sentence, tweet, or comment here…"
+          rows="4"
+          maxlength="500"
+        ></textarea>
+        <div class="char-count"><span id="charCount">0</span> / 500</div>
+      </div>
+
+      <!-- word count hint -->
+      <p class="word-hint" id="wordHint">Minimum 3 words required</p>
+
+      <div class="button-row">
+        <button id="analyzeBtn" class="btn-primary">
+          <span class="btn-text">Analyze Text</span>
+          <span class="btn-icon">→</span>
+        </button>
+        <button id="clearBtn" class="btn-secondary">Clear</button>
+      </div>
+
+      <div class="examples-row">
+        <span class="examples-label">Try:</span>
+        <button class="chip" data-text="I really love this sunny weather today, feeling great!">Neutral</button>
+        <button class="chip" data-text="This damn code won't compile, what the hell is wrong with it">Mild Profanity</button>
+        <button class="chip" data-text="I hate all people from that country, they should leave">Targeted Hate</button>
+      </div>
+    </section>
+
+    <!-- RESULTS -->
+    <section class="results-section" id="resultsSection">
+
+      <div class="loading" id="loadingState">
+        <div class="spinner"></div>
+        <span>Analyzing with 3 models…</span>
+      </div>
+
+      <div class="error-box" id="errorState"></div>
+
+      <div class="results-content" id="resultsContent">
+
+        <div class="cleaned-text-box">
+          <span class="cleaned-label">Preprocessed text</span>
+          <p id="cleanedText" class="mono-text"></p>
+        </div>
+
+        <div class="cards-grid" id="cardsGrid"></div>
+
+        <div class="verdict-banner" id="verdictBanner">
+          <span class="verdict-label">Overall Verdict</span>
+          <span class="verdict-text" id="verdictText"></span>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- HOW IT WORKS -->
+    <section class="how-it-works">
+      <h2 class="section-title">How it works</h2>
+      <div class="steps-grid">
+        <div class="step">
+          <div class="step-num">01</div>
+          <div class="step-title">Preprocess</div>
+          <div class="step-desc">Lowercase, strip URLs & handles, remove stopwords, lemmatize.</div>
+        </div>
+        <div class="step">
+          <div class="step-num">02</div>
+          <div class="step-title">Vectorize</div>
+          <div class="step-desc">TF-IDF with bigrams converts text into a numeric feature vector.</div>
+        </div>
+        <div class="step">
+          <div class="step-num">03</div>
+          <div class="step-title">Classify</div>
+          <div class="step-desc">Logistic Regression, SVM, and Random Forest each cast a vote.</div>
+        </div>
+        <div class="step">
+          <div class="step-num">04</div>
+          <div class="step-title">Verdict</div>
+          <div class="step-desc">Majority vote across all three models is the final prediction.</div>
+        </div>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <p>Built for the ML Project — Aeman Nadeem &amp; Amna Arshad</p>
+    </footer>
+
+  </div>
+
+  <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
